@@ -1,25 +1,29 @@
 const screens = Array.from(document.querySelectorAll(`template`));
-const greetingScreenNumber = 0;
+const GREETING_SCREEN_NUMBER = 0;
 const KEY_CODE = {
   'left': 37,
   'right': 39,
 };
 
-let currentScreenNumber = greetingScreenNumber;
+let currentScreenNumber = GREETING_SCREEN_NUMBER;
+
+const placeholder = document.querySelector(`main.central`);
 
 const showScreen = (screenNumber) => {
-  const placeholder = document.querySelector(`main.central`);
   placeholder.innerHTML = ``;
   placeholder.appendChild(screens[screenNumber].content.cloneNode(true));
 };
 
+const isLeftKey = (keyCode) => keyCode === KEY_CODE.left;
+const isRightKey = (keyCode) => keyCode === KEY_CODE.right;
+
 document.addEventListener(`keydown`, (evt) => {
-  const directionKey = evt.keyCode;
-  if (evt.altKey && (directionKey === KEY_CODE.left || directionKey === KEY_CODE.right)) {
-    let screenNumber = directionKey === KEY_CODE.left ? currentScreenNumber - 1 : currentScreenNumber + 1;
+  const keyCode = evt.keyCode;
+  if (evt.altKey && (isLeftKey(keyCode) || isRightKey(keyCode))) {
+    let screenNumber = isLeftKey(keyCode) ? currentScreenNumber - 1 : currentScreenNumber + 1;
     currentScreenNumber = (screenNumber >= 0 && screenNumber < screens.length) ? screenNumber : currentScreenNumber;
     showScreen(currentScreenNumber);
   }
 });
 
-showScreen(greetingScreenNumber);
+showScreen(GREETING_SCREEN_NUMBER);
