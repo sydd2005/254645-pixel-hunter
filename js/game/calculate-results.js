@@ -5,10 +5,9 @@ const FAST_TIME_LIMIT = 10;
 const SLOW_TIME_LIMIT = 20;
 
 const calculatePoints = (answer) => {
-  if (!answer.correct) {
-    return ANSWERS_POINTS_MAP[ANSWER_TYPE.WRONG];
-  }
   switch (true) {
+    case !answer.correct:
+      return ANSWERS_POINTS_MAP[ANSWER_TYPE.WRONG];
     case answer.timeElapsed < FAST_TIME_LIMIT:
       return ANSWERS_POINTS_MAP[ANSWER_TYPE.FAST];
     case answer.timeElapsed > SLOW_TIME_LIMIT:
