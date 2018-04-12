@@ -3,7 +3,7 @@ import showScreen from '../show-screen';
 import {addDelegatedEventListener} from '../utils';
 import headerBackComponentMarkup from './header-back-component';
 import footerMarkup from './footer';
-import {generateStepFragment, INITIAL_STATE} from '../game/game-logic';
+import {createStepFragment, INITIAL_STATE} from '../game/game-logic';
 
 
 const elementMarkup = `
@@ -37,7 +37,7 @@ addDelegatedEventListener(`input`, `.rules__input`, (evt) => {
 
 addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
   evt.preventDefault();
-  showScreen(generateStepFragment(INITIAL_STATE));
+  showScreen(createStepFragment(INITIAL_STATE));
 });
 
 export default rulesFragment;

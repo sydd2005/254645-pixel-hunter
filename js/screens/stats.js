@@ -3,7 +3,7 @@ import headerBackComponentMarkup from './header-back-component';
 import footerMarkup from './footer';
 import gameStatsMarkup from './game-stats-component';
 
-const generateStatsFragment = (state) => {
+const createStatsFragment = () => {
   const elementMarkup = `
 <header class="header">
 ${headerBackComponentMarkup}
@@ -80,4 +80,4 @@ ${footerMarkup}`.trim();
   return createFragmentFromTemplate(elementMarkup);
 };
 
-export default generateStatsFragment;
+export default createStatsFragment;
