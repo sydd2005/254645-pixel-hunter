@@ -1,10 +1,10 @@
-const QUESTION_TYPE = {
+export const QUESTION_TYPE = {
   'SINGLE': 1,
   'DOUBLE': 2,
   'TRIPLE': 3,
 };
 
-const IMAGE_TYPE = {
+export const IMAGE_TYPE = {
   'PHOTO': `photo`,
   'PAINT': `paint`,
 };

@@ -1,12 +1,14 @@
 import createFragmentFromTemplate from '../dom-factory';
 import {addDelegatedEventListener} from '../utils';
 import showScreen from '../show-screen';
-import game2ScreenFragment from '../screens/game-2';
+import generateSingleScreen from '../screens/game-2';
 import gameScreenHeaderMarkup from './game-screen-header';
 import footerMarkup from './footer';
 import gameStatsMarkup from './game-stats-component';
+import { goToNextStep } from '../game/game-logic';
 
-const elementMarkup = `
+const generateDoubleScreen = (state) => {
+  const elementMarkup = `
 ${gameScreenHeaderMarkup}
 <div class="game">
 <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
@@ -40,14 +42,17 @@ ${gameScreenHeaderMarkup}
 </div>
 ${footerMarkup}`.trim();
 
-const game1Fragment = createFragmentFromTemplate(elementMarkup);
+  const doubleScreenFragment = createFragmentFromTemplate(elementMarkup);
 
-addDelegatedEventListener(`change`, `.game__content`, () => {
-  const question1Checked = document.querySelector(`.game__content [name=question1]:checked`) !== null;
-  const question2Checked = document.querySelector(`.game__content [name=question2]:checked`) !== null;
-  if (question1Checked && question2Checked) {
-    showScreen(game2ScreenFragment);
-  }
-});
+  addDelegatedEventListener(`change`, `.game__content`, () => {
+    const question1Checked = document.querySelector(`.game__content [name=question1]:checked`) !== null;
+    const question2Checked = document.querySelector(`.game__content [name=question2]:checked`) !== null;
+    if (question1Checked && question2Checked) {
+      goToNextStep(state);
+    }
+  });
 
-export default game1Fragment;
+  return doubleScreenFragment;
+};
+
+export default generateDoubleScreen;

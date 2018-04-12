@@ -1,12 +1,12 @@
 import createFragmentFromTemplate from '../dom-factory';
 import {addDelegatedEventListener} from '../utils';
-import showScreen from '../show-screen';
-import statsScreenFragment from '../screens/stats';
 import gameScreenHeaderMarkup from './game-screen-header';
 import footerMarkup from './footer';
 import gameStatsMarkup from './game-stats-component';
+import {goToNextStep} from '../game/game-logic';
 
-const elementMarkup = `
+const generateTripleScreen = (state) => {
+  const elementMarkup = `
 ${gameScreenHeaderMarkup}
 <div class="game">
 <p class="game__task">Найдите рисунок среди изображений</p>
@@ -27,8 +27,11 @@ ${gameScreenHeaderMarkup}
 </div>
 ${footerMarkup}`.trim();
 
-const game3Fragment = createFragmentFromTemplate(elementMarkup);
+  const tripleScreenFragment = createFragmentFromTemplate(elementMarkup);
+  addDelegatedEventListener(`click`, `.game__content--triple .game__option`, () => goToNextStep(state));
 
-addDelegatedEventListener(`click`, `.game__content--triple .game__option`, () => showScreen(statsScreenFragment));
+  return tripleScreenFragment;
+};
 
-export default game3Fragment;
+
+export default generateTripleScreen;

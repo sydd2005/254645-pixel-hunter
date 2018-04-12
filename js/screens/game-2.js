@@ -1,12 +1,12 @@
 import createFragmentFromTemplate from '../dom-factory';
 import {addDelegatedEventListener} from '../utils';
-import showScreen from '../show-screen';
-import game3ScreenFragment from '../screens/game-3';
 import gameScreenHeaderMarkup from './game-screen-header';
 import footerMarkup from './footer';
 import gameStatsMarkup from './game-stats-component';
+import {goToNextStep} from '../game/game-logic';
 
-const elementMarkup = `
+const generateSingleScreen = (state) => {
+  const elementMarkup = `
 ${gameScreenHeaderMarkup}
 <div class="game">
 <p class="game__task">Угадай, фото или рисунок?</p>
@@ -29,8 +29,11 @@ ${gameScreenHeaderMarkup}
 </div>
 ${footerMarkup}`.trim();
 
-const game2Fragment = createFragmentFromTemplate(elementMarkup);
+  const singleScreenFragment = createFragmentFromTemplate(elementMarkup);
+  addDelegatedEventListener(`click`, `.game__content--wide .game__answer`, () => goToNextStep(state));
 
-addDelegatedEventListener(`click`, `.game__content--wide .game__answer`, () => showScreen(game3ScreenFragment));
+  return singleScreenFragment;
+};
 
-export default game2Fragment;
+
+export default generateSingleScreen;

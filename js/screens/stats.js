@@ -3,7 +3,8 @@ import headerBackComponentMarkup from './header-back-component';
 import footerMarkup from './footer';
 import gameStatsMarkup from './game-stats-component';
 
-const elementMarkup = `
+const generateStatsFragment = (state) => {
+  const elementMarkup = `
 <header class="header">
 ${headerBackComponentMarkup}
 </header>
@@ -76,6 +77,7 @@ ${headerBackComponentMarkup}
 </div>
 ${footerMarkup}`.trim();
 
-const statsElement = createFragmentFromTemplate(elementMarkup);
+  return createFragmentFromTemplate(elementMarkup);
+};
 
-export default statsElement;
+export default generateStatsFragment;

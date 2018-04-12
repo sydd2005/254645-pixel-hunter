@@ -1,9 +1,10 @@
 import createFragmentFromTemplate from '../dom-factory';
 import showScreen from '../show-screen';
-import game1ScreenFragment from '../screens/game-1';
 import {addDelegatedEventListener} from '../utils';
 import headerBackComponentMarkup from './header-back-component';
 import footerMarkup from './footer';
+import {generateStepFragment, INITIAL_STATE} from '../game/game-logic';
+
 
 const elementMarkup = `
 <header class="header">
@@ -36,7 +37,7 @@ addDelegatedEventListener(`input`, `.rules__input`, (evt) => {
 
 addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
   evt.preventDefault();
-  showScreen(game1ScreenFragment);
+  showScreen(generateStepFragment(INITIAL_STATE));
 });
 
 export default rulesFragment;
