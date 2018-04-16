@@ -1,20 +1,37 @@
-import {ANSWERS_POINTS_MAP, LIVES_POINTS, ANSWER_TYPE} from './points';
+import {ANSWERS_POINTS_MAP, LIVES_POINTS} from './points';
+import {ANSWER_TYPE} from './dicts';
 import CONFIG from './config';
 
 const FAST_TIME_LIMIT = 10;
 const SLOW_TIME_LIMIT = 20;
 
-const calculatePoints = (answer) => {
+export const getAnswerType = (answer) => {
   switch (true) {
+    case !answer:
+      return ANSWER_TYPE.UNKNOWN;
     case !answer.correct:
-      return ANSWERS_POINTS_MAP[ANSWER_TYPE.WRONG];
+      return ANSWER_TYPE.WRONG;
     case answer.timeElapsed < FAST_TIME_LIMIT:
-      return ANSWERS_POINTS_MAP[ANSWER_TYPE.FAST];
+      return ANSWER_TYPE.FAST;
     case answer.timeElapsed > SLOW_TIME_LIMIT:
-      return ANSWERS_POINTS_MAP[ANSWER_TYPE.SLOW];
+      return ANSWER_TYPE.SLOW;
     default:
-      return ANSWERS_POINTS_MAP[ANSWER_TYPE.CORRECT];
+      return ANSWER_TYPE.CORRECT;
   }
+};
+
+const calculatePoints = (answer) => {
+  // switch (true) {
+  //   case !answer.correct:
+  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.WRONG];
+  //   case answer.timeElapsed < FAST_TIME_LIMIT:
+  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.FAST];
+  //   case answer.timeElapsed > SLOW_TIME_LIMIT:
+  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.SLOW];
+  //   default:
+  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.CORRECT];
+  // }
+  return ANSWERS_POINTS_MAP[getAnswerType(answer)];
 };
 
 const calculateResults = (answers, remainingLives) => {

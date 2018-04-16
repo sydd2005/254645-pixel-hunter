@@ -1,15 +1,14 @@
-const gameStatsMarkup = `
-<ul class="stats">
-  <li class="stats__result stats__result--wrong"></li>
-  <li class="stats__result stats__result--slow"></li>
-  <li class="stats__result stats__result--fast"></li>
-  <li class="stats__result stats__result--correct"></li>
-  <li class="stats__result stats__result--wrong"></li>
-  <li class="stats__result stats__result--unknown"></li>
-  <li class="stats__result stats__result--slow"></li>
-  <li class="stats__result stats__result--unknown"></li>
-  <li class="stats__result stats__result--fast"></li>
-  <li class="stats__result stats__result--unknown"></li>
-</ul>`.trim();
+import {getAnswerType} from "../game/calculate-results";
+import {ANSWER_MODIFIER_MAP} from "../game/dicts";
 
-export default gameStatsMarkup;
+const createGameStatsMarkup = (state) => {
+  const statsItems = state.stats.map((statsItem) => {
+    return `<li class="stats__result stats__result--${ANSWER_MODIFIER_MAP[getAnswerType(statsItem)]}"></li>`;
+  });
+  return `
+<ul class="stats">
+  ${statsItems}
+</ul>`.trim();
+};
+
+export default createGameStatsMarkup;

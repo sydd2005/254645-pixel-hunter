@@ -88,7 +88,57 @@ const GAME_DATA = {
           correct: false,
         },
       ]
-    }
+    },
+    {
+      type: QUESTION_TYPE.SINGLE,
+      task: `Угадай, фото или рисунок?`,
+      imageUrls: [
+        `http://i.imgur.com/1KegWPz.jpg`
+      ],
+      // варианты ответов
+      options: [
+        {
+          imageUrl: `http://i.imgur.com/1KegWPz.jpg`,
+          imageType: IMAGE_TYPE.PHOTO,
+          correct: true,
+        },
+        {
+          imageUrl: `http://i.imgur.com/1KegWPz.jpg`,
+          imageType: IMAGE_TYPE.PAINT,
+          correct: false,
+        }
+      ],
+    },
+    {
+      type: QUESTION_TYPE.DOUBLE,
+      task: `Угадайте для каждого изображения фото или рисунок?`,
+      imageUrls: [
+        `https://k42.kn3.net/CF42609C8.jpg`,
+        `https://k42.kn3.net/D2F0370D6.jpg`
+      ],
+      options: [
+        {
+          imageUrl: `https://k42.kn3.net/CF42609C8.jpg`,
+          imageType: IMAGE_TYPE.PHOTO,
+          correct: false,
+        },
+        {
+          imageUrl: `https://k42.kn3.net/CF42609C8.jpg`,
+          imageType: IMAGE_TYPE.PAINT,
+          correct: true,
+        },
+        {
+          imageUrl: `https://k42.kn3.net/D2F0370D6.jpg`,
+          imageType: IMAGE_TYPE.PHOTO,
+          correct: false,
+        },
+        {
+          imageUrl: `https://k42.kn3.net/D2F0370D6.jpg`,
+          imageType: IMAGE_TYPE.PAINT,
+          correct: true,
+        }
+      ]
+    },
   ],
   stats: [],
 };

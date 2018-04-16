@@ -1,9 +1,4 @@
-export const ANSWER_TYPE = {
-  'CORRECT': 1,
-  'FAST': 2,
-  'SLOW': 3,
-  'WRONG': 4,
-};
+import {ANSWER_TYPE} from './dicts';
 
 export const ANSWERS_POINTS_MAP = {
   [ANSWER_TYPE.CORRECT]: 100,

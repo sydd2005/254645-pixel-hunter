@@ -1,9 +1,9 @@
 import createFragmentFromTemplate from '../dom-factory';
 import headerBackComponentMarkup from './header-back-component';
 import footerMarkup from './footer';
-import gameStatsMarkup from './game-stats-component';
+import createGameStatsMarkup from './game-stats-component';
 
-const createStatsFragment = () => {
+const createStatsFragment = (state) => {
   const elementMarkup = `
 <header class="header">
 ${headerBackComponentMarkup}
@@ -14,7 +14,7 @@ ${headerBackComponentMarkup}
   <tr>
     <td class="result__number">1.</td>
     <td colspan="2">
-      ${gameStatsMarkup}
+      ${createGameStatsMarkup(state)}
     </td>
     <td class="result__points">×&nbsp;100</td>
     <td class="result__total">900</td>
@@ -48,7 +48,7 @@ ${headerBackComponentMarkup}
   <tr>
     <td class="result__number">2.</td>
     <td>
-      ${gameStatsMarkup}
+      ${createGameStatsMarkup(state)}
     </td>
     <td class="result__total"></td>
     <td class="result__total  result__total--final">fail</td>
@@ -58,7 +58,7 @@ ${headerBackComponentMarkup}
   <tr>
     <td class="result__number">3.</td>
     <td colspan="2">
-      ${gameStatsMarkup}
+      ${createGameStatsMarkup(state)}
     </td>
     <td class="result__points">×&nbsp;100</td>
     <td class="result__total">900</td>
