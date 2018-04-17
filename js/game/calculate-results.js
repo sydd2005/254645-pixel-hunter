@@ -20,19 +20,7 @@ export const getAnswerType = (answer) => {
   }
 };
 
-const calculatePoints = (answer) => {
-  // switch (true) {
-  //   case !answer.correct:
-  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.WRONG];
-  //   case answer.timeElapsed < FAST_TIME_LIMIT:
-  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.FAST];
-  //   case answer.timeElapsed > SLOW_TIME_LIMIT:
-  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.SLOW];
-  //   default:
-  //     return ANSWERS_POINTS_MAP[ANSWER_TYPE.CORRECT];
-  // }
-  return ANSWERS_POINTS_MAP[getAnswerType(answer)];
-};
+const calculatePoints = (answer) => ANSWERS_POINTS_MAP[getAnswerType(answer)];
 
 const calculateResults = (answers, remainingLives) => {
   if (answers.length < CONFIG.GAMES_COUNT) {
