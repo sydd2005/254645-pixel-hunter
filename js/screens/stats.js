@@ -7,9 +7,16 @@ import {ANSWER_TYPE} from '../game/dicts';
 import calculateResults from '../game/calculate-results';
 
 const createStatsFragment = (state) => {
-  const resultTitle = state.lives >= 0 ? `Победа!` : `Поражение`;
+  const gameIsWon = state.lives >= 0;
+  const resultTitle = gameIsWon ? `Победа!` : `Поражение`;
   const correctAnswersPoints = state.stats.filter((answer) => answer && answer.correct).length * ANSWERS_POINTS_MAP[ANSWER_TYPE.CORRECT];
   const LIVES_BONUS_POINTS = 50;
+  const correctAnswersMarkup = gameIsWon ? `
+<td class="result__points">×&nbsp;100</td>
+<td class="result__total">${correctAnswersPoints}</td>`.trim()
+    : `
+<td class="result__total"></td>
+<td class="result__total  result__total--final">fail</td>`.trim();
   const livesBonusMarkup = state.lives > 0 ? `
 <tr>
   <td></td>
@@ -17,7 +24,14 @@ const createStatsFragment = (state) => {
   <td class="result__extra">${state.lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
   <td class="result__points">×&nbsp;${LIVES_BONUS_POINTS}</td>
   <td class="result__total">${state.lives * LIVES_BONUS_POINTS}</td>
-</tr>`.trim() : ``;
+</tr>`.trim()
+    : ``;
+
+  const totalPointsMarkup = gameIsWon ? `
+<tr>
+  <td colspan="5" class="result__total  result__total--final">${calculateResults(state.stats, state.lives)}</td>
+</tr>`.trim()
+    : ``;
 
   const elementMarkup = `
 <header class="header">
@@ -31,13 +45,10 @@ ${headerBackComponentMarkup}
     <td colspan="2">
       ${createGameStatsMarkup(state)}
     </td>
-    <td class="result__points">×&nbsp;100</td>
-    <td class="result__total">${correctAnswersPoints}</td>
+    ${correctAnswersMarkup}
   </tr>
   ${livesBonusMarkup}
-  <tr>
-    <td colspan="5" class="result__total  result__total--final">${calculateResults(state.stats, state.lives)}</td>
-  </tr>
+  ${totalPointsMarkup}
 </table>
 <table class="result__table">
   <tr>
