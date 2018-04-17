@@ -11,8 +11,8 @@ const createTripleScreenFragment = (state) => {
   const fragmentMarkup = createGameScreenMarkup(state, HAS_ANSWERS, GAME_CONTENT_MODIFIER);
 
   const tripleScreenFragment = createFragmentFromTemplate(fragmentMarkup);
-
-  addDelegatedEventListener(`click`, `.game__content--triple .game__option`, (evt) => {
+  const gameContentForm = tripleScreenFragment.querySelector(`.game__content`);
+  addDelegatedEventListener(`click`, `.game__option`, (evt) => {
     const checkedAnswerElement = evt.target;
     if (checkedAnswerElement) {
       const candidateAnswers = [JSON.parse(checkedAnswerElement.dataset[`answer`])];
@@ -22,7 +22,7 @@ const createTripleScreenFragment = (state) => {
       newState = changeLivesCount(newState, answerResult);
       goToNextStep(newState);
     }
-  });
+  }, gameContentForm);
 
   return tripleScreenFragment;
 };

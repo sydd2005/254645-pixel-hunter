@@ -1,10 +1,11 @@
 import createFragmentFromTemplate from '../dom-factory';
 import showScreen from '../show-screen';
-import rulesScreenFragment from '../screens/rules';
+import createRulesScreenFragment from '../screens/rules';
 import {addDelegatedEventListener} from '../utils';
 import footerMarkup from './footer';
 
-const elementMarkup = `
+const createGreetingFragment = () => {
+  const elementMarkup = `
 <div class="greeting central--blur">
 <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
 <h1 class="greeting__asterisk">*</h1>
@@ -20,10 +21,11 @@ const elementMarkup = `
 </div>
 ${footerMarkup}`.trim();
 
-const greetingFragment = createFragmentFromTemplate(elementMarkup);
+  const greetingFragment = createFragmentFromTemplate(elementMarkup);
+  addDelegatedEventListener(`click`, `.greeting__continue`, () => showScreen(createRulesScreenFragment()));
 
-// addDelegatedEventListener(`click`, `.header__back`, () => showScreen(greetingFragment));
-addDelegatedEventListener(`click`, `.greeting__continue`, () => showScreen(rulesScreenFragment));
+  return greetingFragment;
+};
 
 
-export default greetingFragment;
+export default createGreetingFragment;

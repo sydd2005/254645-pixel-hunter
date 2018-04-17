@@ -6,8 +6,6 @@ import createSingleScreenFragment from '../screens/game-2';
 import createDoubleScreenFragment from '../screens/game-1';
 import createTripleScreenFragment from '../screens/game-3';
 import CONFIG from './config';
-import {getAnswerType} from './calculate-results';
-import {ANSWER_TYPE} from './dicts';
 
 export const createInitialState = () => {
   const initialState = {

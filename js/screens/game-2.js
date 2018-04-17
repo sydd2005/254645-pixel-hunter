@@ -11,7 +11,9 @@ const createSingleScreenFragment = (state) => {
   const fragmentMarkup = createGameScreenMarkup(state, HAS_ANSWERS, GAME_CONTENT_MODIFIER);
 
   const singleScreenFragment = createFragmentFromTemplate(fragmentMarkup);
-  addDelegatedEventListener(`change`, `.game__content--wide`, () => {
+  const gameElement = singleScreenFragment.querySelector(`.game`);
+
+  addDelegatedEventListener(`change`, `.game__content`, () => {
     const checkedAnswerElement = document.querySelector(`[name=question1]:checked`);
     if (checkedAnswerElement) {
       const candidateAnswers = [JSON.parse(checkedAnswerElement.dataset[`answer`])];
@@ -21,7 +23,7 @@ const createSingleScreenFragment = (state) => {
       newState = changeLivesCount(newState, answerResult);
       goToNextStep(newState);
     }
-  });
+  }, gameElement);
 
   return singleScreenFragment;
 };

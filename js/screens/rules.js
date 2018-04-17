@@ -5,8 +5,8 @@ import headerBackComponentMarkup from './header-back-component';
 import footerMarkup from './footer';
 import {createStepFragment, createInitialState} from '../game/game-logic';
 
-
-const elementMarkup = `
+const createRulesScreenFragment = () => {
+  const elementMarkup = `
 <header class="header">
 ${headerBackComponentMarkup}
 </header>
@@ -28,16 +28,19 @@ ${headerBackComponentMarkup}
 </div>
 ${footerMarkup}`.trim();
 
-const rulesFragment = createFragmentFromTemplate(elementMarkup);
+  const rulesFragment = createFragmentFromTemplate(elementMarkup);
 
-addDelegatedEventListener(`input`, `.rules__input`, (evt) => {
-  const continueButton = document.querySelector(`.rules__button.continue`);
-  continueButton.disabled = evt.target.value === ``;
-});
+  addDelegatedEventListener(`input`, `.rules__input`, (evt) => {
+    const continueButton = document.querySelector(`.rules__button.continue`);
+    continueButton.disabled = evt.target.value === ``;
+  });
 
-addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
-  evt.preventDefault();
-  showScreen(createStepFragment(createInitialState()));
-});
+  addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
+    evt.preventDefault();
+    showScreen(createStepFragment(createInitialState()));
+  });
 
-export default rulesFragment;
+  return rulesFragment;
+};
+
+export default createRulesScreenFragment;

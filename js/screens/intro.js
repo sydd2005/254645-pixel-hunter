@@ -1,6 +1,6 @@
 import createFragmentFromTemplate from '../dom-factory';
 import showScreen from '../show-screen';
-import greetingScreenFragment from '../screens/greeting';
+import createGreetingScreenFragment from '../screens/greeting';
 import {addDelegatedEventListener} from '../utils';
 import footerMarkup from './footer';
 
@@ -15,6 +15,6 @@ ${footerMarkup}`.trim();
 
 const introFragment = createFragmentFromTemplate(elementMarkup);
 
-addDelegatedEventListener(`click`, `.intro__asterisk`, () => showScreen(greetingScreenFragment));
+addDelegatedEventListener(`click`, `.intro__asterisk`, () => showScreen(createGreetingScreenFragment()));
 
 export default introFragment;

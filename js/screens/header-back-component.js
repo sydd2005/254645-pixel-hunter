@@ -1,6 +1,6 @@
 import showScreen from '../show-screen';
 import {addDelegatedEventListener} from '../utils';
-import greetingFragment from './greeting';
+import createGreetingFragment from './greeting';
 
 const headerBackComponentMarkup = `
 <div class="header__back">
@@ -10,6 +10,6 @@ const headerBackComponentMarkup = `
 </button>
 </div>`.trim();
 
-addDelegatedEventListener(`click`, `.header__back`, () => showScreen(greetingFragment));
+addDelegatedEventListener(`click`, `.header__back`, () => showScreen(createGreetingFragment()));
 
 export default headerBackComponentMarkup;

@@ -10,6 +10,7 @@ const createDoubleScreenFragment = (state) => {
   const fragmentMarkup = createGameScreenMarkup(state, HAS_ANSWERS);
 
   const doubleScreenFragment = createFragmentFromTemplate(fragmentMarkup);
+  const gameElement = doubleScreenFragment.querySelector(`.game`);
 
   addDelegatedEventListener(`change`, `.game__content`, () => {
     const checkedQuestion1Element = document.querySelector(`[name=question1]:checked`);
@@ -27,7 +28,7 @@ const createDoubleScreenFragment = (state) => {
         goToNextStep(newState);
       }
     }
-  });
+  }, gameElement);
 
   return doubleScreenFragment;
 };
