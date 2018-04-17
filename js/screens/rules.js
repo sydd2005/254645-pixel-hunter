@@ -1,16 +1,14 @@
 import createFragmentFromTemplate from '../dom-factory';
 import showScreen from '../show-screen';
-import game1ScreenFragment from '../screens/game-1';
 import {addDelegatedEventListener} from '../utils';
+import headerBackComponentMarkup from './header-back-component';
+import footerMarkup from './footer';
+import {createStepFragment, createInitialState} from '../game/game-logic';
 
-const elementMarkup = `
+const createRulesScreenFragment = () => {
+  const elementMarkup = `
 <header class="header">
-<div class="header__back">
-  <button class="back">
-    <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-    <img src="img/logo_small.svg" width="101" height="44">
-  </button>
-</div>
+${headerBackComponentMarkup}
 </header>
 <div class="rules">
 <h1 class="rules__title">Правила</h1>
@@ -28,27 +26,21 @@ const elementMarkup = `
   <button class="rules__button  continue" type="submit" disabled>Go!</button>
 </form>
 </div>
-<footer class="footer">
-<a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-<span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-<div class="footer__social-links">
-  <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-  <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-  <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-  <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-</div>
-</footer>`.trim();
+${footerMarkup}`.trim();
 
-const rulesFragment = createFragmentFromTemplate(elementMarkup);
+  const rulesFragment = createFragmentFromTemplate(elementMarkup);
 
-addDelegatedEventListener(`input`, `.rules__input`, (evt) => {
-  const continueButton = document.querySelector(`.rules__button.continue`);
-  continueButton.disabled = evt.target.value === ``;
-});
+  addDelegatedEventListener(`input`, `.rules__input`, (evt) => {
+    const continueButton = document.querySelector(`.rules__button.continue`);
+    continueButton.disabled = evt.target.value === ``;
+  });
 
-addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
-  evt.preventDefault();
-  showScreen(game1ScreenFragment);
-});
+  addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
+    evt.preventDefault();
+    showScreen(createStepFragment(createInitialState()));
+  });
 
-export default rulesFragment;
+  return rulesFragment;
+};
+
+export default createRulesScreenFragment;

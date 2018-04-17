@@ -1,77 +1,60 @@
 import createFragmentFromTemplate from '../dom-factory';
+import headerBackComponentMarkup from './header-back-component';
+import footerMarkup from './footer';
+import createGameStatsMarkup from './game-stats-component';
+import {ANSWERS_POINTS_MAP} from '../game/points';
+import {ANSWER_TYPE} from '../game/dicts';
+import calculateResults from '../game/calculate-results';
 
-const elementMarkup = `
+const createStatsFragment = (state) => {
+  const gameIsWon = state.lives >= 0;
+  const resultTitle = gameIsWon ? `Победа!` : `Поражение`;
+  const correctAnswersPoints = state.stats.filter((answer) => answer && answer.correct).length * ANSWERS_POINTS_MAP[ANSWER_TYPE.CORRECT];
+  const LIVES_BONUS_POINTS = 50;
+  const correctAnswersMarkup = gameIsWon ? `
+<td class="result__points">×&nbsp;100</td>
+<td class="result__total">${correctAnswersPoints}</td>`.trim()
+    : `
+<td class="result__total"></td>
+<td class="result__total  result__total--final">fail</td>`.trim();
+  const livesBonusMarkup = state.lives > 0 ? `
+<tr>
+  <td></td>
+  <td class="result__extra">Бонус за жизни:</td>
+  <td class="result__extra">${state.lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
+  <td class="result__points">×&nbsp;${LIVES_BONUS_POINTS}</td>
+  <td class="result__total">${state.lives * LIVES_BONUS_POINTS}</td>
+</tr>`.trim()
+    : ``;
+
+  const totalPointsMarkup = gameIsWon ? `
+<tr>
+  <td colspan="5" class="result__total  result__total--final">${calculateResults(state.stats, state.lives)}</td>
+</tr>`.trim()
+    : ``;
+
+  const elementMarkup = `
 <header class="header">
-<div class="header__back">
-  <button class="back">
-    <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-    <img src="img/logo_small.svg" width="101" height="44">
-  </button>
-</div>
+${headerBackComponentMarkup}
 </header>
 <div class="result">
-<h1>Победа!</h1>
+<h1>${resultTitle}</h1>
 <table class="result__table">
   <tr>
     <td class="result__number">1.</td>
     <td colspan="2">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
+      ${createGameStatsMarkup(state)}
     </td>
-    <td class="result__points">×&nbsp;100</td>
-    <td class="result__total">900</td>
+    ${correctAnswersMarkup}
   </tr>
-  <tr>
-    <td></td>
-    <td class="result__extra">Бонус за скорость:</td>
-    <td class="result__extra">1&nbsp;<span class="stats__result stats__result--fast"></span></td>
-    <td class="result__points">×&nbsp;50</td>
-    <td class="result__total">50</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="result__extra">Бонус за жизни:</td>
-    <td class="result__extra">2&nbsp;<span class="stats__result stats__result--alive"></span></td>
-    <td class="result__points">×&nbsp;50</td>
-    <td class="result__total">100</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="result__extra">Штраф за медлительность:</td>
-    <td class="result__extra">2&nbsp;<span class="stats__result stats__result--slow"></span></td>
-    <td class="result__points">×&nbsp;50</td>
-    <td class="result__total">-100</td>
-  </tr>
-  <tr>
-    <td colspan="5" class="result__total  result__total--final">950</td>
-  </tr>
+  ${livesBonusMarkup}
+  ${totalPointsMarkup}
 </table>
 <table class="result__table">
   <tr>
     <td class="result__number">2.</td>
     <td>
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--wrong"></li>
-      </ul>
+      ${createGameStatsMarkup(state)}
     </td>
     <td class="result__total"></td>
     <td class="result__total  result__total--final">fail</td>
@@ -81,18 +64,7 @@ const elementMarkup = `
   <tr>
     <td class="result__number">3.</td>
     <td colspan="2">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
+      ${createGameStatsMarkup(state)}
     </td>
     <td class="result__points">×&nbsp;100</td>
     <td class="result__total">900</td>
@@ -109,17 +81,9 @@ const elementMarkup = `
   </tr>
 </table>
 </div>
-<footer class="footer">
-<a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-<span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-<div class="footer__social-links">
-  <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-  <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-  <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-  <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-</div>
-</footer>`.trim();
+${footerMarkup}`.trim();
 
-const statsElement = createFragmentFromTemplate(elementMarkup);
+  return createFragmentFromTemplate(elementMarkup);
+};
 
-export default statsElement;
+export default createStatsFragment;
