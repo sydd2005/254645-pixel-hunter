@@ -1,4 +1,4 @@
 import showScreen from './show-screen';
-import introScreenFragment from './screens/intro';
+import createIntroFragment from './screens/intro';
 
-showScreen(introScreenFragment);
+showScreen(createIntroFragment());
