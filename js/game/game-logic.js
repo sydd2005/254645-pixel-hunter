@@ -1,11 +1,11 @@
 import GAME_DATA from '../data/game-data';
 import showScreen from '../show-screen';
 import createStatsFragment from '../screens/stats';
-import {QUESTION_TYPE} from '../data/game-data';
 import createSingleScreenFragment from '../screens/game-2';
 import createDoubleScreenFragment from '../screens/game-1';
 import createTripleScreenFragment from '../screens/game-3';
 import CONFIG from './config';
+import {QUESTION_TYPE} from './dicts';
 
 export const createInitialState = () => {
   const initialState = {
@@ -14,10 +14,6 @@ export const createInitialState = () => {
     time: CONFIG.SECONDS_PER_QUESTION,
     steps: GAME_DATA.questions,
     stats: Array(CONFIG.GAMES_COUNT).fill(null),
-    // get lives() {
-    //   const wrongAnswers = this.stats.filter((answer) => getAnswerType(answer) === ANSWER_TYPE.WRONG);
-    //   return CONFIG.MAX_LIVES - wrongAnswers.length;
-    // },
   };
 
   return initialState;

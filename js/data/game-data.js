@@ -1,13 +1,4 @@
-export const QUESTION_TYPE = {
-  'SINGLE': 1,
-  'DOUBLE': 2,
-  'TRIPLE': 3,
-};
-
-export const IMAGE_TYPE = {
-  'PHOTO': `photo`,
-  'PAINT': `paint`,
-};
+import {QUESTION_TYPE, IMAGE_TYPE} from "../game/dicts";
 
 // игра
 const GAME_DATA = {

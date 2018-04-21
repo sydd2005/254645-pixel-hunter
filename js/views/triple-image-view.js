@@ -1,8 +1,8 @@
 import {AbstractView} from "./abstract-view";
+import createGameScreenMarkup from '../screens/game-screen';
 import {addDelegatedEventListener} from "../utils";
-import createGameScreenMarkup from "../screens/game-screen";
 
-const SingleImageView = class extends AbstractView {
+const TripleImageView = class extends AbstractView {
 
   constructor(state) {
     super();
@@ -14,18 +14,18 @@ const SingleImageView = class extends AbstractView {
   }
 
   bind() {
-    const gameElement = this.element.querySelector(`.game`);
-
-    addDelegatedEventListener(`change`, `.game__content`, () => {
-      const checkedAnswerElement = gameElement.querySelector(`[name=question1]:checked`);
+    const gameContentForm = this.element.querySelector(`.game__content`);
+    addDelegatedEventListener(`click`, `.game__option`, (evt) => {
+      const checkedAnswerElement = evt.target;
       if (checkedAnswerElement) {
         const answer = [JSON.parse(checkedAnswerElement.dataset[`answer`])];
         this.onAnswer(answer);
       }
-    }, gameElement);
+    }, gameContentForm);
   }
 
   onAnswer() {}
+
 };
 
-export default SingleImageView;
+export default TripleImageView;
