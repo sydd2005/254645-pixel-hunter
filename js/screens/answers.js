@@ -1,4 +1,4 @@
-import {IMAGE_TYPE} from "../data/game-data";
+import {IMAGE_TYPE} from "../game/dicts";
 
 const createAnswersMarkup = (questionNumber, imageUrl) => {
   const photoAnswer = {
