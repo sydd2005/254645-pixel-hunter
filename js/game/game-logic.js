@@ -6,6 +6,7 @@ import createDoubleScreenFragment from '../screens/game-1';
 import createTripleScreenFragment from '../screens/game-3';
 import CONFIG from './config';
 import {QUESTION_TYPE} from './dicts';
+import {cloneObject} from '../utils';
 
 export const createInitialState = () => {
   const initialState = {
@@ -34,11 +35,9 @@ const getNextStepIndex = (state) => {
 
 const createNextStepState = (state) => {
   return Object.assign(
-      {},
-      state,
+      cloneObject(state),
       {
         currentStepIndex: getNextStepIndex(state),
-        stats: state.stats.slice()
       }
   );
 };
@@ -59,13 +58,13 @@ export const goToNextStep = (state) => {
 };
 
 export const saveAnswerResult = (state, answerResult) => {
-  const newState = Object.assign({}, state);
+  const newState = cloneObject(state);
   newState.stats[state.currentStepIndex] = answerResult;
   return newState;
 };
 
 export const changeLivesCount = (state, answerResult) => {
-  const newState = Object.assign({}, state);
+  const newState = cloneObject(state);
   if (!answerResult) {
     newState.lives = newState.lives - 1;
   }
