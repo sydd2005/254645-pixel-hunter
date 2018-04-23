@@ -3,6 +3,7 @@ import GreetingPresenter from "./presenters/greeting-presenter";
 import RulesPresenter from "./presenters/rules-presenter";
 import GameModel from "./models/game-model";
 import GamePresenter from "./presenters/game-presenter";
+import StatsPresenter from "./presenters/stats-presenter";
 
 const Application = class {
 
@@ -27,8 +28,9 @@ const Application = class {
     gamePresenter.show();
   }
 
-  static showStats(stats) {
-    console.log(stats);
+  static showStats(gameModel) {
+    const statsPresenter = new StatsPresenter(gameModel);
+    statsPresenter.show();
   }
 
 };

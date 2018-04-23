@@ -5,6 +5,7 @@ import calculateResults from "../game/calculate-results";
 import headerBackComponentMarkup from "../screens/header-back-component";
 import createGameStatsMarkup from "../screens/game-stats-component";
 import footerMarkup from "../screens/footer";
+import {addDelegatedEventListener} from "../utils";
 
 const StatsView = class extends AbstractView {
 
@@ -92,6 +93,14 @@ const StatsView = class extends AbstractView {
 
     return elementMarkup;
   }
+
+  bind() {
+    const header = this.element.querySelector(`.header`);
+    addDelegatedEventListener(`click`, `.header__back`, this.onBackClick, header);
+  }
+
+  onBackClick() {}
+
 };
 
 export default StatsView;

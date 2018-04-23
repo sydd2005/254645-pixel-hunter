@@ -10,6 +10,6 @@ const headerBackComponentMarkup = `
 </button>
 </div>`.trim();
 
-addDelegatedEventListener(`click`, `.header__back`, () => showScreen(createGreetingFragment()));
+// addDelegatedEventListener(`click`, `.header__back`, () => showScreen(createGreetingFragment()));
 
 export default headerBackComponentMarkup;

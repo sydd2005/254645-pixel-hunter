@@ -7,14 +7,22 @@ const RulesPresenter = class extends AbstractPresenter {
   constructor() {
     super();
     this._view = new RulesView();
+    this.bind();
+  }
+
+  bind() {
+    this._view.onBackClick = () => Application.showGreeting();
+
     this._view.onNameInput = (evt) => {
       const continueButton = document.querySelector(`.rules__button.continue`);
       continueButton.disabled = evt.target.value === ``;
     };
+
     this._view.onFormSubmit = () => {
       Application.showGame(`hunter`);
     };
   }
+
 };
 
 export default RulesPresenter;

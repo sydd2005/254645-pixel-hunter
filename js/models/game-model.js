@@ -7,6 +7,10 @@ const GameModel = class {
     this.setInitialState();
   }
 
+  get playerName() {
+    return this._playerName;
+  }
+
   get state() {
     return this._state;
   }
@@ -36,11 +40,11 @@ const GameModel = class {
     return QUESTION_SCREEN_MAP[stepType](state);
   }
 
-  isGameOver() {
+  get isGameOver() {
     return this._state.lives < 0;
   }
 
-  isLastStep() {
+  get isLastStep() {
     const nextStepState = this.createNextStepState();
     return nextStepState.currentStepIndex === this._state.currentStepIndex;
   }

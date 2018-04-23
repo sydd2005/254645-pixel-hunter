@@ -55,8 +55,8 @@ export const QUESTION_BINDINGS_MAP = {
     const gameElement = this.element.querySelector(`.game`);
 
     addDelegatedEventListener(`change`, `.game__content`, () => {
-      const checkedQuestion1Element = document.querySelector(`[name=question1]:checked`);
-      const checkedQuestion2Element = document.querySelector(`[name=question2]:checked`);
+      const checkedQuestion1Element = gameElement.querySelector(`[name=question1]:checked`);
+      const checkedQuestion2Element = gameElement.querySelector(`[name=question2]:checked`);
       if (checkedQuestion1Element && checkedQuestion2Element) {
         const answer = [
           JSON.parse(checkedQuestion1Element.dataset[`answer`]),
