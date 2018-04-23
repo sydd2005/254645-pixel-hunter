@@ -4,11 +4,15 @@ import {cloneObject} from "../utils";
 const GameModel = class {
   constructor(playerName) {
     this._playerName = playerName;
-    this._state = createInitialState();
+    this.setInitialState();
   }
 
   get state() {
     return this._state;
+  }
+
+  setInitialState() {
+    this._state = createInitialState();
   }
 
   getNextStepIndex() {

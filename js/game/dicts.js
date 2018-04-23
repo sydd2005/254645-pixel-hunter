@@ -1,3 +1,5 @@
+import {addDelegatedEventListener} from "../utils";
+
 export const ANSWER_TYPE = {
   'UNKNOWN': 0,
   'CORRECT': 1,
@@ -35,4 +37,43 @@ export const QUESTION_MODIFIER_MAP = {
   [QUESTION_TYPE.SINGLE]: `game__content--wide`,
   [QUESTION_TYPE.DOUBLE]: ``,
   [QUESTION_TYPE.TRIPLE]: `game__content--triple`,
+};
+
+export const QUESTION_BINDINGS_MAP = {
+  [QUESTION_TYPE.SINGLE]() {
+    const gameElement = this.element.querySelector(`.game`);
+
+    addDelegatedEventListener(`change`, `.game__content`, () => {
+      const checkedAnswerElement = gameElement.querySelector(`[name=question1]:checked`);
+      if (checkedAnswerElement) {
+        const answer = [JSON.parse(checkedAnswerElement.dataset[`answer`])];
+        this.onAnswer(answer);
+      }
+    }, gameElement);
+  },
+  [QUESTION_TYPE.DOUBLE]() {
+    const gameElement = this.element.querySelector(`.game`);
+
+    addDelegatedEventListener(`change`, `.game__content`, () => {
+      const checkedQuestion1Element = document.querySelector(`[name=question1]:checked`);
+      const checkedQuestion2Element = document.querySelector(`[name=question2]:checked`);
+      if (checkedQuestion1Element && checkedQuestion2Element) {
+        const answer = [
+          JSON.parse(checkedQuestion1Element.dataset[`answer`]),
+          JSON.parse(checkedQuestion2Element.dataset[`answer`]),
+        ];
+        this.onAnswer(answer);
+      }
+    }, gameElement);
+  },
+  [QUESTION_TYPE.TRIPLE]() {
+    const gameContentForm = this.element.querySelector(`.game__content`);
+    addDelegatedEventListener(`click`, `.game__option`, (evt) => {
+      const checkedAnswerElement = evt.target;
+      if (checkedAnswerElement) {
+        const answer = [JSON.parse(checkedAnswerElement.dataset[`answer`])];
+        this.onAnswer(answer);
+      }
+    }, gameContentForm);
+  },
 };
