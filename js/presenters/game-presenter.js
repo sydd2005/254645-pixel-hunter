@@ -9,34 +9,61 @@ const GamePresenter = class extends AbstractPresenter {
     super();
     this._model = model;
     this._view = new GameView(this.model.state);
+    this._interval = null;
     this.bind();
   }
 
   init() {
-    this._model.setInitialState();
+    this.startTimer();
+  }
+
+  startTimer() {
+    this._interval = setInterval(() => {
+      this._model.timer.tick();
+    }, 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this._interval);
   }
 
   bind() {
-    this._view.onBackClick = () => Application.showGreeting();
+    this._view.onBackClick = () => {
+      this.stopTimer();
+      Application.showGreeting();
+    };
     this._view.onAnswer = (answer) => {
+      this.stopTimer();
       const currentStep = this._model.state.steps[this._model.state.currentStepIndex];
       const correctAnswer = currentStep.options;
       const answerResult = isAnswerCorrect(answer, correctAnswer);
-      this._model.saveAnswerResult({correct: answerResult, timeElapsed: 15});
-      this._model.changeLivesCount(answerResult);
+      this._model.processAnswer(answerResult);
       this.goToNextStep();
     };
+    this._model.timer.onTick = () => {
+      this._view.refreshTime(this._model.remainingTime);
+    };
+    this._model.timer.onTimeElapsed = () => {
+      this.stopTimer();
+      this._model.processAnswer(false);
+      this.goToNextStep();
+    };
+  }
+
+  show() {
+    this.init();
+    super.show();
   }
 
   goToNextStep() {
     if (this._model.isGameOver || this._model.isLastStep) {
       Application.showStats(this._model);
-      return;
+    } else {
+      this._model.goToNextStep();
+      this._view = new GameView(this._model.state);
+      this.bind();
+      this.show();
     }
-    this._model.goToNextStep();
-    this._view = new GameView(this._model.state);
-    this.bind();
-    this.show();
   }
 
 };

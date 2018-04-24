@@ -1,9 +1,12 @@
 import {createInitialState, QUESTION_SCREEN_MAP} from "../game/game-logic";
 import {cloneObject} from "../utils";
+import createTimer from "../game/timer";
+import CONFIG from "../game/config";
 
 const GameModel = class {
   constructor(playerName) {
     this._playerName = playerName;
+    this._timer = createTimer(CONFIG.SECONDS_PER_QUESTION);
     this.setInitialState();
   }
 
@@ -15,8 +18,16 @@ const GameModel = class {
     return this._state;
   }
 
+  get timer() {
+    return this._timer;
+  }
+
   setInitialState() {
     this._state = createInitialState();
+  }
+
+  get remainingTime() {
+    return this._timer.remainingTime;
   }
 
   getNextStepIndex() {
@@ -50,17 +61,27 @@ const GameModel = class {
   }
 
   goToNextStep() {
+    this._timer.reset();
     this._state = this.createNextStepState();
   }
 
   saveAnswerResult(answerResult) {
-    this._state.stats[this._state.currentStepIndex] = answerResult;
+    const statsResult = {
+      correct: answerResult,
+      timeElapsed: this._timer.elapsedTime,
+    };
+    this._state.stats[this._state.currentStepIndex] = statsResult;
   }
 
   changeLivesCount(answerResult) {
     if (!answerResult) {
       this._state.lives = this._state.lives - 1;
     }
+  }
+
+  processAnswer(isCorrect) {
+    this.saveAnswerResult(isCorrect);
+    this.changeLivesCount(isCorrect);
   }
 
 };

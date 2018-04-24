@@ -14,7 +14,7 @@ const RulesPresenter = class extends AbstractPresenter {
     this._view.onBackClick = () => Application.showGreeting();
 
     this._view.onNameInput = (evt) => {
-      const continueButton = document.querySelector(`.rules__button.continue`);
+      const continueButton = this._view.element.querySelector(`.rules__button.continue`);
       continueButton.disabled = evt.target.value === ``;
     };
 

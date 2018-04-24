@@ -22,6 +22,11 @@ const GameView = class extends AbstractView {
     QUESTION_BINDINGS_MAP[stepType].call(this);
   }
 
+  refreshTime(remainingTime) {
+    const timerElement = this.element.querySelector(`.game__timer`);
+    timerElement.innerHTML = remainingTime;
+  }
+
   onBackClick() {}
   onAnswer() {}
 

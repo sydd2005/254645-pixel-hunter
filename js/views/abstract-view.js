@@ -16,8 +16,12 @@ export const AbstractView = class AbstractView {
   get element() {
     if (!this._element) {
       this._element = this.render();
-      this.bind();
+      this.bind(this._element);
     }
     return this._element;
+  }
+
+  set element(node) {
+    this._element = node;
   }
 };

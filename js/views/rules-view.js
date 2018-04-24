@@ -30,15 +30,14 @@ const RulesView = class extends AbstractView {
   }
 
   bind() {
-    const header = this.element.querySelector(`.header`);
-    addDelegatedEventListener(`click`, `.header__back`, this.onBackClick, header);
+    addDelegatedEventListener(`click`, `.header__back`, this.onBackClick, this.element);
 
-    addDelegatedEventListener(`input`, `.rules__input`, this.onNameInput);
+    addDelegatedEventListener(`input`, `.rules__input`, this.onNameInput, this.element);
 
     addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
       evt.preventDefault();
       this.onFormSubmit();
-    });
+    }, this.element);
   }
 
   onBackClick() {}
