@@ -18,8 +18,8 @@ const RulesPresenter = class extends AbstractPresenter {
       continueButton.disabled = evt.target.value === ``;
     };
 
-    this._view.onFormSubmit = () => {
-      Application.showGame(`hunter`);
+    this._view.onFormSubmit = (playerName) => {
+      Application.showGame(playerName);
     };
   }
 

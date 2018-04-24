@@ -36,7 +36,8 @@ const RulesView = class extends AbstractView {
 
     addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
       evt.preventDefault();
-      this.onFormSubmit();
+      const playerName = this.element.querySelector(`.rules__input`).value;
+      this.onFormSubmit(playerName);
     }, this.element);
   }
 
