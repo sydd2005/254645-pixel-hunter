@@ -1,6 +1,6 @@
 import {AbstractView} from "./abstract-view";
-import headerBackComponentMarkup from "../screens/header-back-component";
-import footerMarkup from "../screens/footer";
+import headerBackComponentMarkup from "../markup/header-back-component";
+import footerMarkup from "../markup/footer";
 import {addDelegatedEventListener} from "../utils";
 
 const RulesView = class extends AbstractView {

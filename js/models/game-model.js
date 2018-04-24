@@ -1,4 +1,4 @@
-import {createInitialState, QUESTION_SCREEN_MAP} from "../game/game-logic";
+import {createInitialState} from "../game/game-logic";
 import {cloneObject} from "../utils";
 import createTimer from "../game/timer";
 import CONFIG from "../game/config";
@@ -44,11 +44,6 @@ const GameModel = class {
           currentStepIndex: this.getNextStepIndex(),
         }
     );
-  }
-
-  createStepFragment(state) {
-    const stepType = state.steps[state.currentStepIndex].type;
-    return QUESTION_SCREEN_MAP[stepType](state);
   }
 
   get isGameOver() {

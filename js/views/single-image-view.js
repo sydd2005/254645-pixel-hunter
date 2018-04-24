@@ -1,6 +1,6 @@
 import {AbstractView} from "./abstract-view";
 import {addDelegatedEventListener} from "../utils";
-import createGameScreenMarkup from "../screens/game-screen";
+import createGameScreenMarkup from "../markup/game-screen";
 
 const SingleImageView = class extends AbstractView {
 

@@ -1,5 +1,5 @@
 import {AbstractView} from "./abstract-view";
-import createGameScreenMarkup from "../screens/game-screen";
+import createGameScreenMarkup from "../markup/game-screen";
 import {QUESTION_BINDINGS_MAP} from "../game/dicts";
 import {addDelegatedEventListener} from "../utils";
 

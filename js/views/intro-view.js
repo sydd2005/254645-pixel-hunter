@@ -1,5 +1,5 @@
 import {AbstractView} from "./abstract-view";
-import footerMarkup from "../screens/footer";
+import footerMarkup from "../markup/footer";
 import {addDelegatedEventListener} from "../utils";
 
 const IntroView = class extends AbstractView {

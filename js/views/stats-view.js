@@ -2,9 +2,9 @@ import {AbstractView} from "./abstract-view";
 import {ANSWERS_POINTS_MAP, LIVES_POINTS, SLOW_PENALTY_POINTS, FAST_BONUS_POINTS} from "../game/points";
 import {ANSWER_TYPE} from "../game/dicts";
 import calculateResults, {getAnswerType} from "../game/calculate-results";
-import headerBackComponentMarkup from "../screens/header-back-component";
-import createGameStatsMarkup from "../screens/game-stats-component";
-import footerMarkup from "../screens/footer";
+import headerBackComponentMarkup from "../markup/header-back-component";
+import createGameStatsMarkup from "../markup/game-stats-component";
+import footerMarkup from "../markup/footer";
 import {addDelegatedEventListener} from "../utils";
 
 const StatsView = class extends AbstractView {
