@@ -17,14 +17,14 @@ export const ANSWER_MODIFIER_MAP = {
 };
 
 export const QUESTION_TYPE = {
-  'SINGLE': 1,
-  'DOUBLE': 2,
-  'TRIPLE': 3,
+  'SINGLE': `tinder-like`,
+  'DOUBLE': `two-of-two`,
+  'TRIPLE': `one-of-three`,
 };
 
 export const IMAGE_TYPE = {
   'PHOTO': `photo`,
-  'PAINT': `paint`,
+  'PAINT': `painting`,
 };
 
 export const QUESTION_HAS_ANSWERS_MAP = {

@@ -27,7 +27,7 @@ const StatsView = class extends AbstractView {
   <td class="result__total  result__total--final">fail</td>`.trim();
 
     const fastAnswerCount = this.state.stats.filter((answer) => getAnswerType(answer) === ANSWER_TYPE.FAST).length;
-    const speedBonusMarkup = fastAnswerCount > 0 ? `
+    const speedBonusMarkup = gameIsWon && fastAnswerCount > 0 ? `
   <tr>
     <td></td>
     <td class="result__extra">Бонус за скорость:</td>
@@ -48,7 +48,7 @@ const StatsView = class extends AbstractView {
       : ``;
 
     const slowAnswerCount = this.state.stats.filter((answer) => getAnswerType(answer) === ANSWER_TYPE.SLOW).length;
-    const speedPenaltyMarkup = slowAnswerCount > 0 ? `
+    const speedPenaltyMarkup = gameIsWon && slowAnswerCount > 0 ? `
     <tr>
       <td></td>
       <td class="result__extra">Штраф за медлительность:</td>
