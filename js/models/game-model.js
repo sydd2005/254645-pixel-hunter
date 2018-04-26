@@ -4,10 +4,10 @@ import createTimer from "../game/timer";
 import CONFIG from "../game/config";
 
 const GameModel = class {
-  constructor(playerName) {
+  constructor(playerName, gameData) {
     this._playerName = playerName;
     this._timer = createTimer(CONFIG.SECONDS_PER_QUESTION);
-    this.setInitialState();
+    this._state = createInitialState(gameData);
   }
 
   get playerName() {
@@ -20,10 +20,6 @@ const GameModel = class {
 
   get timer() {
     return this._timer;
-  }
-
-  setInitialState() {
-    this._state = createInitialState();
   }
 
   get remainingTime() {

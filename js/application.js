@@ -4,12 +4,19 @@ import RulesPresenter from "./presenters/rules-presenter";
 import GameModel from "./models/game-model";
 import GamePresenter from "./presenters/game-presenter";
 import StatsPresenter from "./presenters/stats-presenter";
+import Loader from "./data/loader";
+import CONFIG from "./game/config";
+
+let gameData;
 
 const Application = class {
 
   static showWelcome() {
     const introPresenter = new IntroPresenter();
     introPresenter.show();
+    Loader.loadData(CONFIG.DATA_URL)
+        .then((data) => (gameData = data))
+        .then(Application.showGreeting);
   }
 
   static showGreeting() {
@@ -23,7 +30,7 @@ const Application = class {
   }
 
   static showGame(userName) {
-    const gameModel = new GameModel(userName);
+    const gameModel = new GameModel(userName, gameData);
     const gamePresenter = new GamePresenter(gameModel);
     gamePresenter.show();
   }
