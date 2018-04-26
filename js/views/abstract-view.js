@@ -20,4 +20,8 @@ export const AbstractView = class AbstractView {
     }
     return this._element;
   }
+
+  set element(node) {
+    this._element = node;
+  }
 };

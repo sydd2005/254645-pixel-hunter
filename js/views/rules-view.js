@@ -1,6 +1,6 @@
 import {AbstractView} from "./abstract-view";
-import headerBackComponentMarkup from "../screens/header-back-component";
-import footerMarkup from "../screens/footer";
+import headerBackComponentMarkup from "../markup/header-back-component";
+import footerMarkup from "../markup/footer";
 import {addDelegatedEventListener} from "../utils";
 
 const RulesView = class extends AbstractView {
@@ -30,14 +30,18 @@ const RulesView = class extends AbstractView {
   }
 
   bind() {
-    addDelegatedEventListener(`input`, `.rules__input`, this.onNameInput);
+    addDelegatedEventListener(`click`, `.header__back`, this.onBackClick, this.element);
+
+    addDelegatedEventListener(`input`, `.rules__input`, this.onNameInput, this.element);
 
     addDelegatedEventListener(`submit`, `.rules__form`, (evt) => {
       evt.preventDefault();
-      this.onFormSubmit();
-    });
+      const playerName = this.element.querySelector(`.rules__input`).value;
+      this.onFormSubmit(playerName);
+    }, this.element);
   }
 
+  onBackClick() {}
   onNameInput() {}
   onFormSubmit() {}
 

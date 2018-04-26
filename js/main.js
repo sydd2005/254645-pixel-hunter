@@ -1,4 +1,3 @@
-import showScreen from './show-screen';
-import createIntroFragment from './screens/intro';
+import Application from './application';
 
-showScreen(createIntroFragment());
+Application.showWelcome();
