@@ -9,7 +9,7 @@ const createGameScreenMarkup = (state) => {
   const stepType = currentStep.type;
   const gameScreenHeaderMarkup = createGameScreenHeaderMarkup(state);
   const optionsMarkup = createOptionsMarkup(currentStep.imageUrls, QUESTION_HAS_ANSWERS_MAP[stepType], currentStep.options);
-  const gameStatsMarkup = createGameStatsMarkup(state);
+  const gameStatsMarkup = createGameStatsMarkup(state.stats);
 
   const fragmentMarkup = `
 ${gameScreenHeaderMarkup}

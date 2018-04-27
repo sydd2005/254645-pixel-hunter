@@ -41,11 +41,10 @@ const Application = class {
     };
     const statsPresenter = new StatsPresenter(gameModel);
     statsPresenter.show();
-    Loader.saveResults(currentResults, gameModel.playerName)
-        .then(() => Loader.loadResults(gameModel.playerName))
-        .then((results) => {
-          console.log(results);
-        });
+
+    Loader.loadResults(gameModel.playerName)
+        .then((results) => statsPresenter.showLoadedResults(results))
+        .then(() => Loader.saveResults(currentResults, gameModel.playerName));
   }
 
 };

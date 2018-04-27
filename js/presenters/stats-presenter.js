@@ -17,6 +17,10 @@ const StatsPresenter = class extends AbstractPresenter {
     };
   }
 
+  showLoadedResults(results) {
+    this._view.showLoadedResults(results);
+  }
+
 };
 
 export default StatsPresenter;

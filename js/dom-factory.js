@@ -1,12 +1,13 @@
-const createFragmentFromTemplate = (stringTemplate) => {
+const createElementFromTemplate = (stringTemplate) => {
   const template = document.createElement(`div`);
   template.innerHTML = stringTemplate;
-  // const templateFragment = document.createDocumentFragment();
-  // [...template.children].forEach((element) => {
-  //   templateFragment.appendChild(element);
-  // });
-  // return templateFragment;
   return template;
 };
 
-export default createFragmentFromTemplate;
+export const createFragmentFromTemplate = (stringTemplate) => {
+  const template = document.createElement(`template`);
+  template.innerHTML = stringTemplate;
+  return template.content;
+};
+
+export default createElementFromTemplate;
