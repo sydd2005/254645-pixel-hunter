@@ -1,7 +1,18 @@
-import {createInitialState} from "../game/game-logic";
 import {cloneObject} from "../utils";
 import createTimer from "../game/timer";
 import CONFIG from "../game/config";
+
+const createInitialState = (data) => {
+  const initialState = {
+    currentStepIndex: 0,
+    lives: CONFIG.MAX_LIVES,
+    time: CONFIG.SECONDS_PER_QUESTION,
+    steps: data.questions,
+    stats: Array(CONFIG.GAMES_COUNT).fill(null),
+  };
+
+  return initialState;
+};
 
 const GameModel = class {
   constructor(playerName, gameData) {
