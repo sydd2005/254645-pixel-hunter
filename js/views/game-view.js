@@ -22,8 +22,18 @@ const GameView = class extends AbstractView {
     QUESTION_BINDINGS_MAP[stepType].call(this);
   }
 
+  set timerShouldBlink(isBlinking) {
+    this._timerShouldBlink = isBlinking;
+  }
+
   refreshTime(remainingTime) {
     const timerElement = this.element.querySelector(`.game__timer`);
+    if (this._timerShouldBlink) {
+      timerElement.style.opacity = 1;
+      setTimeout(() => {
+        timerElement.style.opacity = 0;
+      }, 500);
+    }
     timerElement.innerHTML = remainingTime;
   }
 

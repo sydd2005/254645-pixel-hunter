@@ -43,6 +43,9 @@ const GamePresenter = class extends AbstractPresenter {
     this._model.timer.onTick = () => {
       this._view.refreshTime(this._model.remainingTime);
     };
+    this._model.timer.onTimeIsRunningOut = () => {
+      this._view.timerShouldBlink = true;
+    };
     this._model.timer.onTimeElapsed = () => {
       this.stopTimer();
       this._model.processAnswer(false);

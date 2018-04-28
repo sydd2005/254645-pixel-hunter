@@ -5,6 +5,9 @@ const checkStatus = (response) => {
   if (response.ok) {
     return response;
   }
+  if (response.status === 404) {
+    return Promise.resolve({json: () => []});
+  }
   throw new Error(`${response.status}: ${response.statusText}`);
 };
 

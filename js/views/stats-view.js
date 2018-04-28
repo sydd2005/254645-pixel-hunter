@@ -13,7 +13,6 @@ const StatsView = class extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
-    this._resultsContainer = this.element.querySelector(`.result`);
   }
 
   createSingleGameStatsMarkup(stats, lives, resultNumber) {
@@ -100,6 +99,7 @@ const StatsView = class extends AbstractView {
 
   bind() {
     addDelegatedEventListener(`click`, `.header__back`, this.onBackClick, this.element);
+    this._resultsContainer = this.element.querySelector(`.result`);
   }
 
   showLoadedResults(results) {
