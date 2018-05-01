@@ -2,6 +2,7 @@ import GameView from "../views/game-view";
 import AbstractPresenter from "./abstract-presenter";
 import {isAnswerCorrect} from "../game/is-answer-correct";
 import Application from "../application";
+import ModalView from "../views/modal-view";
 
 const GamePresenter = class extends AbstractPresenter {
 
@@ -9,6 +10,7 @@ const GamePresenter = class extends AbstractPresenter {
     super();
     this._model = model;
     this._view = new GameView(this.model.state);
+    this._confirmModal = new ModalView();
     this._interval = null;
     this.bind();
   }
@@ -29,8 +31,15 @@ const GamePresenter = class extends AbstractPresenter {
 
   bind() {
     this._view.onBackClick = () => {
+      this.showConfirmationDialog();
+    };
+    this._confirmModal.onConfirm = () => {
       this.stopTimer();
+      this._view.element.removeChild(this._confirmModal.element);
       Application.showGreeting();
+    };
+    this._confirmModal.onCancel = () => {
+      this._view.element.removeChild(this._confirmModal.element);
     };
     this._view.onAnswer = (answer) => {
       this.stopTimer();
@@ -56,6 +65,10 @@ const GamePresenter = class extends AbstractPresenter {
   show() {
     this.init();
     super.show();
+  }
+
+  showConfirmationDialog() {
+    this._view.element.appendChild(this._confirmModal.element);
   }
 
   goToNextStep() {

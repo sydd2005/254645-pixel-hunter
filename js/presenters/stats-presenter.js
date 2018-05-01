@@ -13,7 +13,7 @@ const StatsPresenter = class extends AbstractPresenter {
 
   bind() {
     this._view.onBackClick = () => {
-      Application.showGame(this._model.playerName);
+      Application.showGreeting();
     };
   }
 
