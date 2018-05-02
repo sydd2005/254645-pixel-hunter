@@ -5,7 +5,6 @@ const createOptionMarkup = (optionNumber, imageUrl, hasAnswers, stateOption) => 
   const optionData = !hasAnswers ? `data-answer='${JSON.stringify(stateOption)}'` : ``;
   return `
 <div class="game__option" ${optionData}>
-  <img src="${imageUrl}" alt="Option ${optionNumber}" style="max-width: 100%; max-height: 100%;">
   ${answersMarkup}
 </div>`.trim();
 };

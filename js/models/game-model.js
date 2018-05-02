@@ -8,6 +8,7 @@ const createInitialState = (data) => {
     lives: CONFIG.MAX_LIVES,
     time: CONFIG.SECONDS_PER_QUESTION,
     steps: data.questions,
+    urlImageMap: data.urlImageMap,
     stats: Array(CONFIG.GAMES_COUNT).fill(null),
   };
 
@@ -49,6 +50,7 @@ const GameModel = class {
         cloneObject(this._state),
         {
           currentStepIndex: this.getNextStepIndex(),
+          urlImageMap: this._state.urlImageMap,
         }
     );
   }

@@ -2,6 +2,7 @@ import {AbstractView} from "./abstract-view";
 import createGameScreenMarkup from "../markup/game-screen";
 import {QUESTION_BINDINGS_MAP} from "../game/dicts";
 import {addDelegatedEventListener} from "../utils";
+import createElementFromTemplate from "../dom-factory";
 
 const GameView = class extends AbstractView {
 
@@ -12,6 +13,23 @@ const GameView = class extends AbstractView {
 
   get template() {
     return createGameScreenMarkup(this.state);
+  }
+
+  render() {
+    const gameElement = createElementFromTemplate(this.template);
+    const options = gameElement.querySelectorAll(`.game__option`);
+    const currentStep = this.state.steps[this.state.currentStepIndex];
+    let imageIdx = 0;
+    for (let option of options) {
+      const optionImageUrl = currentStep.imageUrls[imageIdx];
+      const optionImage = this.state.urlImageMap.get(optionImageUrl);
+      optionImage.style.maxWidth = `100%`;
+      optionImage.style.maxHeight = `100%`;
+      optionImage.alt = `Option ${imageIdx + 1}`;
+      option.insertAdjacentElement(`afterbegin`, optionImage);
+      imageIdx = imageIdx + 1;
+    }
+    return gameElement;
   }
 
   bind() {
