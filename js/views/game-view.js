@@ -1,8 +1,10 @@
-import {AbstractView} from "./abstract-view";
+import AbstractView from "./abstract-view";
 import createGameScreenMarkup from "../markup/game-screen";
 import {QUESTION_BINDINGS_MAP} from "../game/dicts";
 import {addDelegatedEventListener} from "../utils";
 import createElementFromTemplate from "../dom-factory";
+
+const BLINK_DELAY = 500;
 
 const GameView = class extends AbstractView {
 
@@ -50,7 +52,7 @@ const GameView = class extends AbstractView {
       timerElement.style.opacity = 1;
       setTimeout(() => {
         timerElement.style.opacity = 0;
-      }, 500);
+      }, BLINK_DELAY);
     }
     timerElement.innerHTML = remainingTime;
   }

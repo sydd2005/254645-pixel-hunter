@@ -1,4 +1,4 @@
-import {AbstractView} from "./abstract-view";
+import AbstractView from "./abstract-view";
 import headerBackComponentMarkup from "../markup/header-back-component";
 import footerMarkup from "../markup/footer";
 import {addDelegatedEventListener} from "../utils";

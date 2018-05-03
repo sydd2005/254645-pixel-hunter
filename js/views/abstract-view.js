@@ -1,6 +1,6 @@
 import createFragmentFromTemplate from "../dom-factory";
 
-export const AbstractView = class AbstractView {
+const AbstractView = class AbstractView {
   get template() {
     throw new Error(`Абстрактный метод должен быть переопределен в наследниках!`);
   }
@@ -25,3 +25,5 @@ export const AbstractView = class AbstractView {
     this._element = node;
   }
 };
+
+export default AbstractView;

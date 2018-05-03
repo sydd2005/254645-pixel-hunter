@@ -2,11 +2,13 @@ import adaptServerData from "./data-adapter";
 import CONFIG from "../game/config";
 import {cloneObject} from "../utils";
 
+const STATUS_NOT_FOUND = 404;
+
 const checkStatus = (response) => {
   if (response.ok) {
     return response;
   }
-  if (response.status === 404) {
+  if (response.status === STATUS_NOT_FOUND) {
     return Promise.resolve({json: () => []});
   }
   throw new Error(`${response.status}: ${response.statusText}`);

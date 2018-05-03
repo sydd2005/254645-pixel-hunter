@@ -1,3 +1,4 @@
+const CROSSFADE_STEP = 200;
 const placeholder = document.querySelector(`main.central`);
 
 const showScreen = (screenFragment) => {
@@ -18,7 +19,7 @@ export const showScreenCrossFade = (screenElement) => {
       clearInterval(crossFadeInterval);
       placeholder.removeChild(currentScreenElement);
     }
-  }, 200);
+  }, CROSSFADE_STEP);
 };
 
 export default showScreen;

@@ -1,4 +1,4 @@
-import {AbstractView} from "./abstract-view";
+import AbstractView from "./abstract-view";
 import {ANSWERS_POINTS_MAP, LIVES_POINTS, SLOW_PENALTY_POINTS, FAST_BONUS_POINTS} from "../game/points";
 import {ANSWER_TYPE} from "../game/dicts";
 import calculateResults, {getAnswerType} from "../game/calculate-results";

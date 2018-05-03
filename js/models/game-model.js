@@ -38,6 +38,15 @@ const GameModel = class {
     return this._timer.remainingTime;
   }
 
+  get isGameOver() {
+    return this._state.lives < 0;
+  }
+
+  get isLastStep() {
+    const nextStepState = this.createNextStepState();
+    return nextStepState.currentStepIndex === this._state.currentStepIndex;
+  }
+
   getNextStepIndex() {
     let nextStepIndex = this._state.currentStepIndex + 1;
     const lastStepIndex = this._state.steps.length - 1;
@@ -53,15 +62,6 @@ const GameModel = class {
           urlImageMap: this._state.urlImageMap,
         }
     );
-  }
-
-  get isGameOver() {
-    return this._state.lives < 0;
-  }
-
-  get isLastStep() {
-    const nextStepState = this.createNextStepState();
-    return nextStepState.currentStepIndex === this._state.currentStepIndex;
   }
 
   goToNextStep() {

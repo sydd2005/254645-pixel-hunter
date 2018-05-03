@@ -1,4 +1,4 @@
-import {AbstractView} from "./abstract-view";
+import AbstractView from "./abstract-view";
 import {addDelegatedEventListener} from "../utils";
 import createGameScreenMarkup from "../markup/game-screen";
 

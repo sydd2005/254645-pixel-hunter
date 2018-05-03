@@ -4,6 +4,8 @@ import {isAnswerCorrect} from "../game/is-answer-correct";
 import Application from "../application";
 import ModalView from "../views/modal-view";
 
+const TICK_STEP = 1000;
+
 const GamePresenter = class extends AbstractPresenter {
 
   constructor(model) {
@@ -22,7 +24,7 @@ const GamePresenter = class extends AbstractPresenter {
   startTimer() {
     this._interval = setInterval(() => {
       this._model.timer.tick();
-    }, 1000);
+    }, TICK_STEP);
   }
 
   stopTimer() {
