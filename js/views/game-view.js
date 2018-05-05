@@ -27,6 +27,7 @@ const GameView = class extends AbstractView {
       const optionImage = this.state.urlImageMap.get(optionImageUrl);
       optionImage.style.maxWidth = `100%`;
       optionImage.style.maxHeight = `100%`;
+      optionImage.style.pointerEvents = `none`;
       optionImage.alt = `Option ${imageIdx + 1}`;
       option.insertAdjacentElement(`afterbegin`, optionImage);
       imageIdx = imageIdx + 1;
