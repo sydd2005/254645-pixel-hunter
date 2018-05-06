@@ -14,8 +14,6 @@ const checkStatus = (response) => {
   throw new Error(`${response.status}: ${response.statusText}`);
 };
 
-const toJSON = (res) => res.json();
-
 const loadImage = (url) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -25,50 +23,66 @@ const loadImage = (url) => {
   });
 };
 
-const loadImages = (gameData) => {
+const createUrlImageMap = (questionsImages) => {
+  const urlImageMap = new Map();
+  for (const questionImages of questionsImages) {
+    for (const urlImagePair of questionImages) {
+      urlImageMap.set(urlImagePair[0], urlImagePair[1]);
+    }
+  }
+  return urlImageMap;
+};
+
+const loadImages = async (gameData) => {
   const gameDataWithImages = cloneObject(gameData);
   const questionImagesPromises = gameDataWithImages.questions.map((question) => {
     return Promise.all(question.imageUrls.map((imageUrl) => loadImage(imageUrl)));
   });
-  return Promise.all(questionImagesPromises)
-      .then((questionsImages) => {
-        const urlImageMap = new Map();
-        for (const questionImages of questionsImages) {
-          for (const urlImagePair of questionImages) {
-            urlImageMap.set(urlImagePair[0], urlImagePair[1]);
-          }
-        }
-        gameDataWithImages.urlImageMap = urlImageMap;
-        return gameDataWithImages;
-      });
+  const questionsImages = await Promise.all(questionImagesPromises);
+  const urlImageMap = createUrlImageMap(questionsImages);
+  gameDataWithImages.urlImageMap = urlImageMap;
+  return gameDataWithImages;
 };
 
 const Loader = class {
 
-  static loadData() {
-    return window.fetch(CONFIG.DATA_URL)
-        .then(checkStatus)
-        .then(toJSON)
-        .then(adaptServerData)
-        .then(loadImages);
+  static async loadData() {
+    try {
+      const response = await window.fetch(CONFIG.DATA_URL);
+      const checkedResponse = await checkStatus(response);
+      const jsonResponse = await checkedResponse.json();
+      const gameData = await adaptServerData(jsonResponse);
+      return loadImages(gameData);
+    } catch (error) {
+      return Promise.reject(`Произошла ошибка в методе loadData: ${error}`);
+    }
   }
 
-  static saveResults(data, userName) {
-    const requestSettings = {
-      headers: {
-        'Content-type': `application/json`,
-      },
-      body: JSON.stringify(data),
-      method: `POST`,
-    };
-    return window.fetch(`${CONFIG.RESULTS_URL}/${CONFIG.APP_ID}-${userName}`, requestSettings)
-        .then(checkStatus);
+  static async saveResults(data, userName) {
+    try {
+      const requestSettings = {
+        headers: {
+          'Content-type': `application/json`,
+        },
+        body: JSON.stringify(data),
+        method: `POST`,
+      };
+      const saveResultsResponse = await window.fetch(`${CONFIG.RESULTS_URL}/${CONFIG.APP_ID}-${userName}`, requestSettings);
+      return checkStatus(saveResultsResponse);
+    } catch (error) {
+      return Promise.reject(`Произошла ошибка в методе saveResults: ${error}`);
+    }
   }
 
-  static loadResults(userName) {
-    return window.fetch(`${CONFIG.RESULTS_URL}/${CONFIG.APP_ID}-${userName}`)
-        .then(checkStatus)
-        .then(toJSON);
+  static async loadResults(userName) {
+    try {
+      const loadResultsResponse = await window.fetch(`${CONFIG.RESULTS_URL}/${CONFIG.APP_ID}-${userName}`);
+      const checkedResponse = await checkStatus(loadResultsResponse);
+      return checkedResponse.json();
+
+    } catch (error) {
+      return Promise.reject(`Произошла ошибка в методе loadResults: ${error}`);
+    }
   }
 };
 

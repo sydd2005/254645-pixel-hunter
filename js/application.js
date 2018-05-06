@@ -5,17 +5,21 @@ import GameModel from "./models/game-model";
 import GamePresenter from "./presenters/game-presenter";
 import StatsPresenter from "./presenters/stats-presenter";
 import Loader from "./data/loader";
+import ErrorPresenter from "./presenters/error-presenter";
 
 let gameData;
 
 const Application = class {
 
-  static showWelcome() {
+  static async showWelcome() {
     const introPresenter = new IntroPresenter();
     introPresenter.show();
-    Loader.loadData()
-        .then((data) => (gameData = data))
-        .then(Application.showGreeting);
+    try {
+      gameData = await Loader.loadData();
+      Application.showGreeting();
+    } catch (error) {
+      Application.showError(error);
+    }
   }
 
   static showGreeting() {
@@ -34,7 +38,7 @@ const Application = class {
     gamePresenter.show();
   }
 
-  static showStats(gameModel) {
+  static async showStats(gameModel) {
     const currentResults = {
       stats: gameModel.state.stats,
       lives: gameModel.state.lives,
@@ -42,9 +46,19 @@ const Application = class {
     const statsPresenter = new StatsPresenter(gameModel);
     statsPresenter.show();
 
-    Loader.loadResults(gameModel.playerName)
-        .then((results) => statsPresenter.showLoadedResults(results))
-        .then(() => Loader.saveResults(currentResults, gameModel.playerName));
+    try {
+      const savedResults = await Loader.loadResults(gameModel.playerName);
+      statsPresenter.showLoadedResults(savedResults);
+    } catch (error) {
+      Application.showError(error);
+    } finally {
+      Loader.saveResults(currentResults, gameModel.playerName);
+    }
+  }
+
+  static showError(error) {
+    const errorPresenter = new ErrorPresenter(error);
+    errorPresenter.show();
   }
 
 };
