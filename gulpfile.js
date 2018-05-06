@@ -18,6 +18,7 @@ const babel = require('rollup-plugin-babel');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonJs = require('rollup-plugin-commonjs');
 const uglify = require('gulp-uglify');
+const runSequence = require('run-sequence');
 
 gulp.task('style', function () {
   return gulp.src('sass/style.scss')
@@ -62,8 +63,8 @@ gulp.task('scripts', function () {
         })
       ]
     }, 'iife'))
-    .pipe(sourcemaps.write())
     .pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/js/'));
 });
 
@@ -126,8 +127,10 @@ gulp.task('serve', ['assemble'], function () {
   gulp.watch('js/**/*.js', ['js-watch']);
 });
 
-gulp.task('assemble', ['clean'], function () {
-  gulp.start('copy', 'style');
+gulp.task('assemble', ['clean'], function (done) {
+  runSequence(['copy', 'style'], () => {
+    done();
+  });
 });
 
 gulp.task('build', ['assemble'], function () {
